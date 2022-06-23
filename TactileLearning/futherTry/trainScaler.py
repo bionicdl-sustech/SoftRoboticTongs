@@ -6,14 +6,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
-device = torch.device("cuda:0")
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # device = torch.device("cpu:0")
 print(device)
 
-# tag_pose_vecs = np.load("/home/dong/PycharmProjects/train/old/train_pose.npy")
-# force_vecs = np.load('/home/dong/PycharmProjects/train/old/train_force.npy')
-tag_pose_vecs = np.load("trainPose.npy")
-force_vecs = np.load('trainForce.npy')
+tag_pose_vecs = np.load("../data/trainPose.npy")
+force_vecs = np.load('../data/trainForce.npy')
 maxForce = [0,0,0,0,0,0]
 maxPose = [0,0,0,0,0,0]
 
@@ -25,10 +23,6 @@ for i in range(6):
     for j in range(len(force_vecs)):
         tag_pose_vecs[j][i] /= maxPose[i]
         force_vecs[j][i] /= maxForce[i]
-#
-# for i in range(6):
-#     maxPose[i] = max(tag_pose_vecs[:,i]) if abs(max(tag_pose_vecs[:,i]))>abs(min(tag_pose_vecs[:,i])) else abs(min(tag_pose_vecs[:,i]))
-#     maxForce[i] = max(force_vecs[:,i]) if abs(max(force_vecs[:,i]))>abs(min(force_vecs[:,i])) else abs(min(force_vecs[:,i]))
 
 x = torch.from_numpy(tag_pose_vecs[:, :]).float()
 y = torch.from_numpy(force_vecs[:, :]).float()
@@ -52,18 +46,21 @@ class Net(nn.Module):
 
 net = Net()
 net.to(device)
-checkpoint = torch.load("trainScaler/2.pth")
-net.load_state_dict(checkpoint)
-optimizer = torch.optim.Adam(net.parameters(), lr=0.0001)
-loss_func = torch.nn.MSELoss()  # this is for regression mean squared loss
+learningRate = 1
+pthName = "../model/scalerDataModel.pth"
+for i in range(5):
+    if i > 0:
+        pthName = "../model/scalerDataModel" + str(i-1) + ".pth"
+        checkpoint = torch.load(pthName)
+        net.load_state_dict(checkpoint)
 
-# BATCH_SIZE = 256
-BATCH_SIZE = 4096
-# EPOCH = 10
-# EPOCH = 1000
-time0 = time.time()
+    learningRate *= 0.1
+    optimizer = torch.optim.Adam(net.parameters(), lr=learningRate)
+    loss_func = torch.nn.MSELoss()  # this is for regression mean squared loss
 
-for EPOCH in [100000]:
+    BATCH_SIZE = 4096*8
+    EPOCH = 10000
+
     time0 = time.time()
     torch_dataset = Data.TensorDataset(x, y)
 
@@ -91,8 +88,9 @@ for EPOCH in [100000]:
             running_loss = 0.0
     time1 = time.time()
     print("time:" , time1-time0)
-    torch.save(net.state_dict(), "trainScaler/3.pth" )
-    string = "losses" + str(EPOCH) +".npy"
+    pthName = "../model/scalerDataModel" + str(i) +".pth"
+    torch.save(net.state_dict(), pthName )
+    string = "../model/scalerDatalosses" + str(i) +".npy"
     np.save(string, losses)
 
     # plt.plot(losses)

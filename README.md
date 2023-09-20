@@ -15,13 +15,13 @@ You can use the above websites quickly, and customize the physical meaning, visu
 We attempt to reconstruct the mechanical information of soft fingers by attaching aruco codes to their structures.
 ![setting](readmeMaterial/setting.jpg)
 Through the experimental bench in the above picture, we connected the bottom of the soft finger with aruco to the ATI sensor and fixed it on the linear motion platform to automatically traverse and record the data of the soft finger deformation and the force information of the ATI sensor. Then it is trained through a simple MLP algorithm, and the final test result is shown in the figure.
-![overall](readmeMaterial/tactileLearning.png)
+![overall](readmeMaterial/tactileLearning.jpg)
 
 # Demo
 ## Learning from demostration
 You can use the data collected in the webpage to quickly perform Gaussian-based imitation learning. In order to verify the availability of the data, we used our data to reproduce on the basis of the DDD code, and the final effect is shown in the figure below. However, we just provide a convenient data collection system, you can use this data to try to complete more complex tasks.
 
-![LFD_demo](readmeMaterial/LFDtest.jpg)
+![LFD_demo](readmeMaterial/LFDtest.png)
 
 
 ## Teaching in robotics 

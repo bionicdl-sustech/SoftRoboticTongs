@@ -19,7 +19,8 @@ Through the experimental bench in the above picture, we connected the bottom of 
 
 # Demo
 ## Learning from demostration
-You can use the data collected in the webpage to quickly perform Gaussian-based imitation learning. In order to verify the availability of the data, we used our data to reproduce on the basis of the DDD code, and the final effect is shown in the figure below. However, we just provide a convenient data collection system, you can use this data to try to complete more complex tasks.
+You can use the data collected in the webpage to quickly perform Gaussian-based imitation learning. In order to verify the availability of the data, we used our data to reproduce on the basis of the DDD code, and the final effect is shown in the figure below. In the experiment, we collected four sets of data and wrote four letters of ROLC (Robotics for Online Learning 
+and Control), respectively. However, we just provide a convenient data collection system, you can use this data to try to complete more complex tasks.
 
 ![LFD_demo](readmeMaterial/LFDtest.png)
 

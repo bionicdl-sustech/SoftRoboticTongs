@@ -1,1 +1,0 @@
-We have two different sets of hardware that work the same way, except that one set of jaws is stainless steel and the other set is nylon.

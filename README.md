@@ -12,7 +12,7 @@ You can use the above websites quickly, and customize the physical meaning, visu
 
 ## Experiment
 
-Three data acquisition experiments are shown below.
+Three data acquisition experiments are shown below. The collected data is stored in the 'datasets' folder.
 
 ### 1. Baseline
 
